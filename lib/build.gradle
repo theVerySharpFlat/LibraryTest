@@ -67,3 +67,5 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+apply from: 'publish.gradle'
