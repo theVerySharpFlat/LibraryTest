@@ -101,6 +101,10 @@ addTaskToCopyAllOutputs(cppDriverHeadersZip)*/
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+
+    from(licenseFile) {
+        into '/'
+    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -119,6 +123,10 @@ task outputSourcesJar(type: Jar, dependsOn: classes) {
     destinationDirectory = outputsFolder
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+
+    from(licenseFile) {
+        into '/'
+    }
 }
 
 task outputJavadocJar(type: Jar, dependsOn: javadoc) {
@@ -193,6 +201,15 @@ model {
             }*/
 
             java(MavenPublication) {
+                pom {
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url  = 'http://www.opensource.org/licenses/mit-license.php'
+                        }
+                    }
+                }
+
                 artifact jar
                 artifact sourcesJar
                 artifact javadocJar
@@ -200,6 +217,7 @@ model {
                 artifactId = "${baseArtifactId}-java"
                 groupId artifactGroupId
                 version pubVersion
+
             }
         }
     }
